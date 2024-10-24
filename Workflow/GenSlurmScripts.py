@@ -38,7 +38,7 @@ def GenSlurmFiles_TDDFT(TL_Path,ScaffFolder,ScriptPaths):
     Global_Counter=0
     for slurm_job in range(NumOfJobs):
         counter=0
-        shutil.copy('{}/subTDDFT_Template.sl'.format(ScriptPaths),'{}/sub_TDDFT_{}.sl'.format(TL_Path,slurm_job))
+        shutil.copy('{}/sub_TDDFT_Template.sl'.format(ScriptPaths),'{}/sub_TDDFT_{}.sl'.format(TL_Path,slurm_job))
 
         slurm_file=open('{}/sub_TDDFT_{}.sl'.format(TL_Path,slurm_job),'a')
         cmd_file=open('{}/cmd_{}.lst'.format(TL_Path,slurm_job),'a')
