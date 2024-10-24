@@ -38,9 +38,9 @@ def GenSlurmFiles_TDDFT(TL_Path,ScaffFolder,ScriptPaths):
     Global_Counter=0
     for slurm_job in range(NumOfJobs):
         counter=0
-        shutil.copy('{}/subxTB_TDDFT_Template.sl'.format(ScriptPaths),'{}/subxTB_TDDFT_{}.sl'.format(TL_Path,slurm_job))
+        shutil.copy('{}/subTDDFT_Template.sl'.format(ScriptPaths),'{}/sub_TDDFT_{}.sl'.format(TL_Path,slurm_job))
 
-        slurm_file=open('{}/subxTB_TDDFT_{}.sl'.format(TL_Path,slurm_job),'a')
+        slurm_file=open('{}/sub_TDDFT_{}.sl'.format(TL_Path,slurm_job),'a')
         cmd_file=open('{}/cmd_{}.lst'.format(TL_Path,slurm_job),'a')
         while counter < 72:
             if Global_Counter==len(JobList):
@@ -54,7 +54,7 @@ def GenSlurmFiles_TDDFT(TL_Path,ScaffFolder,ScriptPaths):
             counter=counter+1
 
         ## only use if you want to use a slurm script to call gnu parallel
-        slurm_file=open('{}/subxTB_TDDFT_{}.sl'.format(TL_Path,slurm_job),'a')
+        slurm_file=open('{}/sub_TDDFT_{}.sl'.format(TL_Path,slurm_job),'a')
         slurm_file.write('\n\n')
         slurm_file.write('parallel --delay 0.2 --joblog task.log --progress -j 72 < cmd_{}.lst'.format(slurm_job))
         slurm_file.close()
