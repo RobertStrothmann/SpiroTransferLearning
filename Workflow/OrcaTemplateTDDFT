@@ -1,0 +1,11 @@
+! PBE0 D3BJ def2-TZVP RIJCOSX def2/J CPCM(Acetonitrile) TightSCF
+
+%pal
+nprocs 1
+end
+%tddft
+maxdim 30
+nroots 10
+end
+%maxcore 4000
+*xyz 0 1
