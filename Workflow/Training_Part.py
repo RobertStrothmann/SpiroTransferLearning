@@ -58,7 +58,7 @@ def PerformTraining(t,
         os.chdir('{}'.format(Model_Path))
         os.system('sbatch TrainModel.sl')
         time.sleep(5)
-        TJobNames=HPC_Interaction.AllFinished('robst')
+        TJobNames=HPC_Interaction.AllFinished($USERNAME)  ### add your hpc username here
         os.remove('TrainModel.sl')
         HPC_Interaction.MoveTJOBFiles(TJobNames,'{}/TL_{}/NewModel/'.format(CWD,t),'Training')
         os.chdir(CWD)
