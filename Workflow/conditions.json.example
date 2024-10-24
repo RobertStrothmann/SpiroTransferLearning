@@ -1,0 +1,12 @@
+{
+    "scaffold": {
+        "num_rings": {
+            "min": 1
+        }
+    },
+    "decoration": {
+        "mol_weight": {
+            "max": 300
+        }
+    }
+}
