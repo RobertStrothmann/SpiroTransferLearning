@@ -37,6 +37,7 @@ sys.path.append(PathToScaffDecModel)
 epochs=50
 batchsize_training=400
 
+### here one has to specify a job file according to "JobFileTemplate"
 JobFile=open('JobFile.txt','r')
 counter=0
 for line in JobFile:
