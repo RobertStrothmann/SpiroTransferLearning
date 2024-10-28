@@ -124,7 +124,7 @@ for t in range(TLIterations):
         TL_Path='{}/TL_{}'.format(CWD,t)
         os.chdir('TL_{}'.format(t))
         ## generate Mol2XYZ input files including gnu parallel
-        shutil.copy('{}/subCSV2SMI.sl'.format(PathToScripts),'subCSV2SMI.sl')
+        shutil.copy('{}/SlurmScript.sl'.format(PathToScripts),'subCSV2SMI.sl')
 
 
         ### convert weight dict to keys and vals
@@ -211,7 +211,7 @@ for t in range(TLIterations):
 
         ### check for failed xTB runs
         os.chdir('TL_{}'.format(t))
-        shutil.copy('{}/subGenSlurm.sl'.format(PathToScripts),'subGenSlurm.sl')
+        shutil.copy('{}/SlurmScript.sl'.format(PathToScripts),'subGenSlurm.sl')
 
         tmp_file=open('subGenSlurm.sl','a')
         tmp_file.write('python3 {}/MoveFailedRDKit.py -p {} -s {}'.format(PathToScripts,TL_Path,PathToScripts))
@@ -277,7 +277,7 @@ for t in range(TLIterations):
 
         ### check for failed xTB runs
         os.chdir('TL_{}'.format(t))
-        shutil.copy('{}/subMoveFailedxTB.sl'.format(PathToScripts),'subMoveFailed.sl')
+        shutil.copy('{}/SlurmScript.sl'.format(PathToScripts),'subMoveFailed.sl')
 
         tmp_file=open('subMoveFailed.sl','a')
         tmp_file.write('python3 {}/MoveFailedRuns.py -p {} -m {}'.format(PathToScripts,TL_Path,'xTB'))
@@ -295,7 +295,7 @@ for t in range(TLIterations):
 
         ### eval Conf Runs for open form 
         os.chdir('TL_{}'.format(t))
-        shutil.copy('{}/subMoveFailed.sl'.format(PathToScripts),'subGenConf.sl')
+        shutil.copy('{}/SlurmScript.sl'.format(PathToScripts),'subGenConf.sl')
 
         tmp_file=open('subGenConf.sl','a')
         tmp_file.write('python3 {}/GetMinConformer.py -p {}'.format(PathToScripts,TL_Path))
@@ -315,7 +315,7 @@ for t in range(TLIterations):
         
         ### kick out wrongly converged strucs
         os.chdir('TL_{}'.format(t))
-        shutil.copy('{}/subMoveFailed.sl'.format(PathToScripts),'subMoveFailedConv.sl')
+        shutil.copy('{}/SlurmScript.sl'.format(PathToScripts),'subMoveFailedConv.sl')
 
         tmp_file=open('subMoveFailedConv.sl','a')
         tmp_file.write('python3 {}/CheckCoordNum.py'.format(PathToScripts))
@@ -374,7 +374,7 @@ for t in range(TLIterations):
 
         ### eval failed TDDFT run
         os.chdir('TL_{}'.format(t))
-        shutil.copy('{}/subMoveFailed.sl'.format(PathToScripts),'subMoveFailed.sl')
+        shutil.copy('{}/SlurmScript.sl'.format(PathToScripts),'subMoveFailed.sl')
 
         tmp_file=open('subMoveFailed.sl','a')
         tmp_file.write('python3 {}/MoveFailedRuns.py -p {} -m {}'.format(PathToScripts,TL_Path,ThMethod))
@@ -394,7 +394,7 @@ for t in range(TLIterations):
         os.chdir('TL_{}'.format(t))
         
         ### gen crit calc slurm files
-        shutil.copy('{}/subCSV2XYZ.sl'.format(PathToScripts),'subCritAnaSetup.sl')
+        shutil.copy('{}/SlurmScript.sl'.format(PathToScripts),'subCritAnaSetup.sl')
         tmp_file=open('subCritAnaSetup.sl','a')
         tmp_file.write('python3 {}/CritAnalysis.py -s {} -t {} -m {}'.format(PathToScripts,PathToScripts,t,ThMethod))
         tmp_file.close()
