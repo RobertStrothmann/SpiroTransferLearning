@@ -15,3 +15,23 @@ ________
 The trained baseline and fine-tuned model(s) for the three individual runs can be found on [Zenodo.org](https://zenodo.org/records/14011804)
 
 ________
+
+## Workflow: 
+The full workflow is in the python script ```Run_TransferLearning.py```. The script consist of *7 major steps* that are repeated within one transfer learning iteration. Since the script is tailored for a specific use case most of the I/O parts and HPC related parts are moved out of the script. If this is interessting to you, you can read the last part of this paragraph (HPC usage). In the following a short summary of all the subroutines are listed: 
+
+- Step 1: Training the REINVENT Scaffold decorator
+
+- Step 2: Sampling from a trained model
+
+- Step 3: Create .xyz structures
+  
+- Step 4: Optimize with xTB & lowest energy conformer assignment
+  
+- Step 5: Calculate excited states via TDDFT
+  
+- Step 6: Calculate design criteria (addressability and thermostability)
+  
+- Step 7: Define pareto points based on a non-dominated sorting algorithm
+
+
+### HPC usage:
