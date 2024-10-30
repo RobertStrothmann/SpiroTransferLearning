@@ -26,7 +26,7 @@ def PerformTraining(t,
         
         ## create new folder for trained model and copy submit file to the folder of the architecture
         os.mkdir('TL_{}/NewModel'.format(t))        
-        shutil.copy('{}/TrainModel.sl'.format(ScriptFolder_Path),'{}/TrainModel.sl'.format(Model_Path))
+        shutil.copy('{}/SlurmScript.sl'.format(ScriptFolder_Path),'{}/TrainModel.sl'.format(Model_Path))
         TrainJobFile=open('{}/TrainModel.sl'.format(Model_Path),'a')
 
 
