@@ -20,20 +20,33 @@ ________
 The full workflow is in the python script ```Run_TransferLearning.py```. The script consist of *7 major steps* that are repeated within one transfer learning iteration. Since the script is tailored for a specific use case most of the I/O parts and HPC related parts are moved out of the script. If this is interessting to you, you can read the last part of this paragraph (HPC usage). In the following a short summary of all the subroutines are listed: 
 
 - Step 1 - Training the REINVENT Scaffold decorator: <br/>
-  In this step the model is trained following a REINVENT scaffold- decorator training script. The ```PerformTraining()``` function in the ```Training_Part.py``` script performs a series of REINVENT scripts, namely      slicing of the training set, creating the randomized training set and training the model. 
+  In this step the model is trained following a REINVENT scaffold- decorator training script. The ```PerformTraining()``` function in the ```Training_Part.py``` script performs a series of REINVENT scripts, namely      slicing of the training set, creating the randomized training set and training the model. In first iteration of the transfer learning no retraining is needed.
 
 
-- Step 2 - Sampling from a trained model:
+- Step 2 - Sampling from a trained model: <br/>
+  This step samples molecules from a trained model by the use of a REINVENT scaffold-decorator script. The ```PerformSampling()``` function in the ```Sampling_Part.py``` script creates input files for the actual   
+  sampling script ```RunSampling.py```. On has to give a so callled "Scaffold Folder" path in which the scaffolds as well as their labels are given. You can find an example for this folder above. 
 
-- Step 3: Create .xyz structures
+- Step 3 - Create .xyz structures: <br/>
+  Beside some I/O related commands this part provides the script to convert the sampled molecular SMILES from step 2 into .xyz files. To do so ```CSV2XYZ.py``` and ```SMI2XYZ.py``` are used to create a fixed number
+  of most likely molecules as .xyz coordinates of the closed (SP) and open (MC) form. To account for different conformers the script creates not only one .xyz structure per molecule, but 10 by the use of the
+  ```AllChem.EmbedMultipleConfs``` module in RdKit. 
   
-- Step 4: Optimize with xTB & lowest energy conformer assignment
+- Step 4 - Optimize with xTB & lowest energy conformer assignment: <br/>
+  First, a script (```GenxTB_Inputs.py```) creates input files for the following xTB geometry optimization which is then run and analyzed for non converged structures by the script ```MoveFailedRuns.py```. After
+  that, a script (```GetMinConformer.py```) is used to select the lowest xTB energy conformer for a given structure and compress the other conformers. 
+
+- Step 5 - Calculate excited states via TDDFT: <br/>
+  The lowest xTB energy conformer from step 4 is used to run TDDFT calculations and obtain the excited states. To do so, the function ```GenSlurmFiles_TDDFT()``` from the script ```GenSlurmScripts.py``` is used to
+  create HPC submission files
   
-- Step 5: Calculate excited states via TDDFT
+- Step 6 - Calculate design criteria (addressability and thermostability): <br/>
+  The results (optimized geometries and excited states) from step 4 and step 5 are used to calculate the design criteria. Beside some I/O and HPC related commands the scripts ```OpenClosedAnalysis.py``` and
+  ```ThermoStabilityAnalysis.py``` are used to evaluate candidate structures and write their addressability and thermostability values out. 
   
-- Step 6: Calculate design criteria (addressability and thermostability)
-  
-- Step 7: Define pareto points based on a non-dominated sorting algorithm
+- Step 7 - Define pareto points based on a non-dominated sorting algorithm: <br/>
+  In the last step, all calculated criteria from step 6 are used in a non-dominated sorting algorithm (applied in the script ```ParetoAnalysis.py```) to obtain a set of (close to) pareto front molecules. The hits are
+  written down into a file and are used in the following transfer learning iteration for retraining.
 
 
 ### HPC usage:
