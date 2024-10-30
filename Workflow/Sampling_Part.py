@@ -28,7 +28,7 @@ def PerformSampling(t,
     
     
     ## copy slurm script and python script to the correct folder
-    shutil.copy('{}/SamplingScaffold.sl'.format(ScriptFolder_Path),'{}/SamplingScaffold.sl'.format(Model_Path))
+    shutil.copy('{}/SlurmScript.sl'.format(ScriptFolder_Path),'{}/SamplingScaffold.sl'.format(Model_Path))
     shutil.copy('{}/RunSampling.py'.format(ScriptFolder_Path),'{}/RunSampling.py'.format(Model_Path))
     
     
