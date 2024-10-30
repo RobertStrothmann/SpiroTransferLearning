@@ -53,6 +53,6 @@ The full workflow is in the python script ```Run_TransferLearning.py```. The scr
 Big parts of the uploaded scripts are responsable for I/O and/or HPC related tasks. <br/> 
 In such a large scale workflow a list of files and folders have to be created, processed and purged and a large number of structure evaluations (namely xTB and Orca TDDFT) have to be performed. To handle this demands different strategies were followed: <br/>
  - The python function ```Parallel``` from the module ```joblib``` is used whenever python calls have to be parallelized. Examples for this can be found in the creating of .xyz files by RdKit as in step 3.
- - Whenever external ressources are needed (i.e. for quantum chemistry software runs) the workflow creates ```SlurmRunFiles.sl``` which are then automatically submitted by the python ```os``` module (short for operating system).
+ - Whenever external ressources are needed (i.e. for quantum chemistry software runs) the workflow creates ```SlurmRunFiles.sl``` which are then automatically submitted by the python ```os``` module (short for operating system). On the HPC system the program ```gnu parallel``` is used to run the most optimal HPC jobs possible. 
  - The progress of these HPC runs are tracked within ```HPC_Interaction.py```. 
 *Please note*: not all HPC provider support this type of scripting on their cluster and all HPC and I/O related steps in this workflow have to be adjusted/rewritten whenever one wants to use this workflow.
