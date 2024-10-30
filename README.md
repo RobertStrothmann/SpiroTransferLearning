@@ -11,7 +11,7 @@ Each of the files in the ```/Data/``` folder has a list of sampled molecules as 
 
 ________
 
-## Model: 
+## Models: 
 The trained baseline and fine-tuned model(s) for the three individual runs can be found on [Zenodo.org](https://zenodo.org/records/14011804)
 
 ________
