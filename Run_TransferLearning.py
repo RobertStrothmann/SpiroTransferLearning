@@ -394,7 +394,7 @@ for t in range(TLIterations):
         step=step+1
 
     #####################################################################################################################
-    #### 5) Calculate spectra via TDDFT
+    #### 5) Calculate Design Criteria
     if step==5:
         start=time.time()
         S_CWD=os.getcwd()
