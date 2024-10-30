@@ -19,7 +19,7 @@ ________
 ## Workflow: 
 The full workflow is in the python script ```Run_TransferLearning.py```. The script consist of *7 major steps* that are repeated within one transfer learning iteration. Since the script is tailored for a specific use case most of the I/O parts and HPC related parts are moved out of the script. If this is interessting to you, you can read the last part of this paragraph (HPC usage). In the following a short summary of all the subroutines are listed: 
 
-- Step 1 - Training the REINVENT Scaffold decorator:
+- Step 1 - Training the REINVENT Scaffold decorator: \n
   In this step the model is trained following a REINVENT scaffold- decorator training script. The ```PerformTraining()``` function in the ```Training_Part.py``` script performs a series of REINVENT scripts, namely      slicing of the training set, creating the randomized training set and training the model. 
 
 
