@@ -70,7 +70,7 @@ for t in range(TLIterations):
         os.mkdir('TL_{}/TJobFiles/'.format(t))
     
         #####################################################################################################################
-        ##### 0.) Training                      ---> for argparse: conditions file, baseline model, path to reinvent (global)
+        ##### 1.) Training                      ---> for argparse: conditions file, baseline model, path to reinvent (global)
         start=time.time()
         Training_Part.PerformTraining(t,
                                    PathToScaffDecModel,
@@ -87,7 +87,7 @@ for t in range(TLIterations):
     
     if step==1:
         #####################################################################################################################
-        ##### 1.) Sampling Scaffolds            ---> for argparse: model for sampling, modelpath (global), 
+        ##### 2.) Sampling Scaffolds            ---> for argparse: model for sampling, modelpath (global), 
         ##                                                              #rand. steps (global), #samples strucs (global)
         ##                                                              #GPU cores (global), list of scaffolds (global)
         start=time.time()
@@ -107,7 +107,7 @@ for t in range(TLIterations):
 
     if step==2:
         #####################################################################################################################
-        #### 2.) Create Photoswitch Subset      ---> for argparse: nothing
+        #### 3.) Create Photoswitch Subset      ---> for argparse: nothing
         ## init weights
         if t==0: 
             Weights={}
@@ -200,7 +200,7 @@ for t in range(TLIterations):
 
     if step==3:
         #####################################################################################################################
-        ### 3.) xTB conformer optimziation ---> for argparse: nothing
+        ### 4) xTB conformer optimziation ---> for argparse: nothing
         start=time.time()
         ## xTB
         CWD=os.getcwd()
@@ -265,15 +265,6 @@ for t in range(TLIterations):
         os.chdir(CWD)
         step=step+1
         stop=time.time()
-    #####################################################################################################################    
-    
-    
-    #####################################################################################################################
-    #### 4a.) Analyze open/closed bin spectra according to photoswitch criterion --> argparse: photoswitch crit
-    if step==4:
-        start=time.time()
-        CWD=os.getcwd()
-        TL_Path='{}/TL_{}'.format(CWD,t)
 
         ### check for failed xTB runs
         os.chdir('TL_{}'.format(t))
@@ -330,7 +321,16 @@ for t in range(TLIterations):
 
         os.system('rm subMoveFailedConv.sl')
         os.chdir(CWD)
-
+        stop=time.time()
+        FileManager.UpdateTimings('TDDFT Move Failed Files',round(stop - start,5))
+        step=step+1
+        
+    #####################################################################################################################
+    #### 5) Calculate spectra via TDDFT
+    if step==4:
+        start=time.time()
+        CWD=os.getcwd()
+        TL_Path='{}/TL_{}'.format(CWD,t)
 
         ### calc TDDFT/sTDA
         if ThMethod=='TDDFT':
@@ -389,7 +389,16 @@ for t in range(TLIterations):
 
         os.system('rm subMoveFailed.sl')
         os.chdir(CWD)
+        stop=time.time()
+        FileManager.UpdateTimings('TDDFT Move Failed Files',round(stop - start,5))
+        step=step+1
 
+    #####################################################################################################################
+    #### 5) Calculate spectra via TDDFT
+    if step==5:
+        start=time.time()
+        S_CWD=os.getcwd()
+        os.chdir('TL_{}'.format(t))
         ### run crit calc slurm files
         os.chdir('TL_{}'.format(t))
         
@@ -451,7 +460,7 @@ for t in range(TLIterations):
         FileManager.UpdateTimings('Crit Analysis',round(stop - start,5))
         step=step+1
 
-    if step==5:
+    if step==6:
         start=time.time()
         S_CWD=os.getcwd()
         os.chdir('TL_{}'.format(t))
